@@ -9,7 +9,7 @@ interface AdjustmentModalProps {
 
 const AdjustmentModal = ({ visible, coordinates, onClose }: AdjustmentModalProps) => {
   if (!coordinates) {
-    return null; // Não renderiza nada se as coordenadas forem inválidas
+    return null;
   }
 
   return (

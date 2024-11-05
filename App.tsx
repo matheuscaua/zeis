@@ -7,9 +7,9 @@ import InfoModal from './src/modals/InfoModal';
 import AdjustmentModal from './src/modals/AdjustmentModal';
 import { calculateAdjustment } from './src/utils/Calculation';
 
-const GRID_SIZE = 400; // Tamanho da malha (400px x 400px)
-const CIRCLE_RADIUS_PX = 75; // Raio do círculo central (em px)
-const MAX_ERR_SHOTS = 3; // Número máximo de tiros errados
+const GRID_SIZE = 400;
+const CIRCLE_RADIUS_PX = 75; 
+const MAX_ERR_SHOTS = 3; 
 
 const App = () => {
   const [shots, setShots] = useState<{ x: number; y: number }[]>([]);
@@ -36,36 +36,31 @@ const App = () => {
         // Se o tiro for correto
         setMessage('Tiro correto! A mira está calibrada.');
         setModalVisible(true);
-        resetErrorShots(); // Limpa os erros ao acertar
+        resetErrorShots();
       } else {
-        // Se o tiro for errado
         const newErrorShots = [...errorShots, newShot];
         setErrorShots(newErrorShots);
         if (newErrorShots.length === MAX_ERR_SHOTS) {
-          // Quando chegar a três tiros errados, calcula o ajuste
           const adj = calculateAdjustment(newErrorShots);
           setAdjustment(adj);
           setMessage('Você disparou três vezes. Ajuste necessário na mira.');
-          setAdjustmentModalVisible(true); // Exibe o modal de ajuste
+          setAdjustmentModalVisible(true); 
         }
       }
   
-      // Atualiza as coordenadas do último tiro
       setLastCoordinates({ x: (locationX - GRID_SIZE / 2) / 50, y: -(locationY - GRID_SIZE / 2) / 50 });
     }
   };
   
-  // Atualização da função resetShots
   const resetShots = () => {
-    setShots([]); // Limpa os tiros
-    setErrorShots([]); // Limpa os tiros errados
-    setModalVisible(false); // Fecha o modal de informações
-    setAdjustmentModalVisible(false); // Fecha o modal de ajustes
-    setAdjustment(null); // Reseta os ajustes
-    setLastCoordinates(null); // Limpa as coordenadas do último tiro
+    setShots([]); 
+    setErrorShots([]); 
+    setModalVisible(false); 
+    setAdjustmentModalVisible(false); 
+    setAdjustment(null); 
+    setLastCoordinates(null); 
   };
 
-  // Função que verifica se o tiro foi dentro do círculo central
   const checkCalibration = (locationX: number, locationY: number) => {
     const dx = locationX - GRID_SIZE / 2;
     const dy = locationY - GRID_SIZE / 2;
@@ -73,12 +68,10 @@ const App = () => {
     return distanceFromCenter <= CIRCLE_RADIUS_PX;
   };
 
-  // Reseta os tiros errados
   const resetErrorShots = () => {
-    setErrorShots([]); // Limpa os tiros errados
+    setErrorShots([]); 
   };
 
-  // Função que renderiza as linhas do grid
   const renderGridLines = () => {
     const gridLines = [];
     for (let i = -4; i <= 4; i++) {
@@ -93,7 +86,6 @@ const App = () => {
         />
       );
 
-      // Linhas verticais
       gridLines.push(
         <View
           key={`vertical-${i}`}
@@ -134,7 +126,7 @@ const App = () => {
 
       <AdjustmentModal
         visible={adjustmentModalVisible}
-        coordinates={adjustment || { x: 0, y: 0 }} // Garante que haja coordenadas válidas
+        coordinates={adjustment || { x: 0, y: 0 }}
         onClose={() => setAdjustmentModalVisible(false)}
       />
     </View>

@@ -1,4 +1,4 @@
-// src/utils/calculations.ts
+
 export const calculateAdjustment = (errorShots: { x: number; y: number }[]) => {
   const GRID_SIZE = 400;
   const SQUARE_SIZE = 50;
